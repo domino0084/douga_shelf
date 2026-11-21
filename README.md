@@ -4,6 +4,19 @@
 
 Figma：https://www.figma.com/design/KoiwsinAEo9GlJgQAtMqsm/%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3%E4%BD%9C%E6%88%90%E3%83%AF%E3%83%BC%E3%82%AF?node-id=0-1&t=720CE5PA6dqCzkEZ-1
 
+
+## ER図
+
+dbdiagram.io：https://dbdiagram.io/d/DougaShelf-ER図-6b014baa03a79fafab1fd3c1
+
+### 設計意図
+
+- 動画とタグは多対多の関係になるため、中間テーブル `video_tags` で分解しています。
+- 動画のカテゴリは1つだけ選ぶ設計のため、`videos.category_id` で多対1の関係にしています。カテゴリが未設定の動画（未分類）を表現できるよう、空の値を許可しています。カテゴリを削除した場合も、動画は残してこの値を空にします。
+- 同じ動画でもURLの形式は複数あるため（`youtube.com/watch?v=` と `youtu.be/` など）、URLから取り出した動画IDを `youtube_video_id` に保存し、ユーザーごとの重複登録の判定に使います。
+- カテゴリ名・タグ名はユーザーごとに重複しないよう、`user_id` との組み合わせで一意にしています。
+- チャンネル名は自動取得した値を表示するだけで、MVPではチャンネル単位の機能がないため、`videos` に持たせています。チャンネル単位の機能を追加する段階で、テーブルを分けることを検討します。
+- `users` と `sessions` は、Rails 8標準の認証ジェネレーターが作成する構成に合わせています。
 ---
 
 ## 1. サービス概要

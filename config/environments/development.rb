@@ -78,5 +78,4 @@ Rails.application.configure do
 
   # Docker の内部ネットワークからのアクセスでも Web Console を使えるようにする
   config.web_console.allowed_ips = [ "172.16.0.0/12", "192.168.0.0/16" ]
-
 end
